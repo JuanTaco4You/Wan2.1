@@ -196,18 +196,23 @@ def gradio_interface():
                 gr.Markdown("First-Last-Frame-to-Video generation is not yet implemented.")
             with gr.TabItem("VACE"):
                 gr.Markdown("VACE is not yet implemented.")
-        js_code = """
-        function(theme) {
-            if (theme) {
-                document.body.classList.add('dark');
-            } else {
-                document.body.classList.remove('dark');
-            }
-            return theme;
-        }
-        """
-        theme_switcher = gr.Checkbox(label="Dark Mode", value=False)
-        theme_switcher.change(lambda x: gr.themes.Default(primary_hue="blue", secondary_hue="blue") if not x else gr.themes.Base(), None, demo)
+        theme_dropdown = gr.Dropdown(
+            label="Theme",
+            choices=["Default", "Dark"],
+            value="Default"
+        )
+
+        def update_theme(theme):
+            if theme == "Dark":
+                return gr.update(theme=gr.themes.Base())
+            else:
+                return gr.update(theme=gr.themes.Default(primary_hue="blue", secondary_hue="blue"))
+
+        theme_dropdown.change(
+            fn=update_theme,
+            inputs=[theme_dropdown],
+            outputs=[demo],
+        )
     return demo
 
 
