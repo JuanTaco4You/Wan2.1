@@ -207,8 +207,7 @@ def gradio_interface():
         }
         """
         theme_switcher = gr.Checkbox(label="Dark Mode", value=False)
-        theme_switcher.change(lambda x: gr.themes.Default(primary_hue="blue", secondary_hue="blue") if not x else gr.themes.Base(), None, demo,
-                              _js=js_code)
+        theme_switcher.change(lambda x: gr.themes.Default(primary_hue="blue", secondary_hue="blue") if not x else gr.themes.Base(), None, demo)
     return demo
 
 
