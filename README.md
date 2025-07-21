@@ -83,7 +83,7 @@ If your work has improved **Wan2.1** and you would like more people to see it, p
 #### Installation
 Clone the repo:
 ```sh
-git clone https://github.com/Wan-Video/Wan2.1.git
+git clone https://github.com/JuanTaco4You/Wan2.1.git
 cd Wan2.1
 ```
 
