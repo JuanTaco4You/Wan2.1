@@ -34,6 +34,31 @@ def prompt_enc(prompt, tar_lang):
         return prompt_output.prompt
 
 
+def load_model(model_name):
+    global wan_t2v, wan_i2v, wan_flf2v, wan_vace, args
+    if "t2v" in model_name:
+        cfg = WAN_CONFIGS[model_name]
+        wan_t2v = wan.WanT2V(
+            config=cfg,
+            checkpoint_dir=args.ckpt_dir_t2v,
+            device_id=0,
+            rank=0,
+            t5_fsdp=False,
+            dit_fsdp=False,
+            use_usp=False,
+        )
+    elif "i2v" in model_name:
+        # Add I2V model loading logic here
+        pass
+    elif "flf2v" in model_name:
+        # Add FLF2V model loading logic here
+        pass
+    elif "vace" in model_name:
+        # Add VACE model loading logic here
+        pass
+    return f"Model {model_name} loaded successfully."
+
+
 def t2v_generation(txt2vid_prompt, resolution, sd_steps, guide_scale,
                    shift_scale, seed, n_prompt):
     global wan_t2v
@@ -74,6 +99,22 @@ def gradio_interface():
                         Wan: Open and Advanced Large-Scale Video Generative Models.
                     </div>
                     """)
+
+        with gr.Row():
+            model_selection = gr.Dropdown(
+                label="Select Model",
+                choices=list(WAN_CONFIGS.keys()),
+                value="t2v-14B"
+            )
+            load_model_button = gr.Button("Load Model")
+
+        status_text = gr.Textbox(label="Status", interactive=False)
+
+        load_model_button.click(
+            fn=load_model,
+            inputs=[model_selection],
+            outputs=[status_text]
+        )
 
         with gr.Tabs():
             with gr.TabItem("Text-to-Video"):
@@ -225,19 +266,6 @@ if __name__ == '__main__':
     else:
         raise NotImplementedError(
             f"Unsupport prompt_extend_method: {args.prompt_extend_method}")
-    print("done", flush=True)
-
-    print("Step2: Init 14B t2v model...", end='', flush=True)
-    cfg_t2v = WAN_CONFIGS['t2v-14B']
-    wan_t2v = wan.WanT2V(
-        config=cfg_t2v,
-        checkpoint_dir=args.ckpt_dir_t2v,
-        device_id=0,
-        rank=0,
-        t5_fsdp=False,
-        dit_fsdp=False,
-        use_usp=False,
-    )
     print("done", flush=True)
 
     demo = gradio_interface()
