@@ -26,7 +26,7 @@ dependencies = [
     "ftfy",
     "dashscope",
     "imageio-ffmpeg",
-    "flash_attn",
+    "flash_attn @ git+https://github.com/Dao-AILab/flash-attention.git",
     "gradio>=5.0.0",
     "numpy>=1.23.5,<2"
 ]
