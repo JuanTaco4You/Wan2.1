@@ -87,10 +87,9 @@ git clone https://github.com/JuanTaco4You/Wan2.1.git
 cd Wan2.1
 ```
 
-Install dependencies:
+Install dependencies (includes the `flash-attn` workaround):
 ```sh
-# Ensure torch >= 2.4.0
-pip install -r requirements.txt
+bash install.sh
 ```
 
 

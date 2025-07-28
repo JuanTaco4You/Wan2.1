@@ -1,5 +1,12 @@
 # Installation Guide
 
+## Quick Setup
+Run the provided `install.sh` script to install all dependencies with the
+recommended `flash-attn` workaround:
+```bash
+bash install.sh
+```
+
 ## Install with pip
 
 ```bash
